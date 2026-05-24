@@ -83,6 +83,27 @@
             font-weight: 600;
             color: var(--md-primary);
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: 40px;
+        }
+        
+        .hero-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-header img {
+            height: 80px;
+            width: 80px;
         }
         
         .nav-links {
@@ -357,7 +378,7 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">🎮 JVM-MCL</div>
+                <div class="logo"><img src="jvm_202605231330_51607.png" alt="JVM-MCL" title="JVM-MCL"> JVM-MCL</div>
                 <ul class="nav-links">
                     <li><a href="#features">功能特性</a></li>
                     <li><a href="#about">关于</a></li>
@@ -369,7 +390,10 @@
 
     <div class="container">
         <div class="hero">
-            <h1>欢迎使用 JVM-MCL</h1>
+            <div class="hero-header">
+                <img src="jvm_202605231330_51607.png" alt="JVM-MCL" title="JVM-MCL">
+                <h1>欢迎使用 JVM-MCL</h1>
+            </div>
             <p>JVM-MCL 是一个功能强大的 Minecraft 启动器，专为 Java 版本优化设计。让您轻松管理游戏实例，享受无缝的游戏体验。</p>
             <a href="https://github.com/Open-code-Studio/JVM-MCL" class="cta-button">立即下载 JVM-MCL</a>
         </div>
@@ -413,7 +437,10 @@
         </div>
 
         <div id="about" class="section">
-            <h2>关于 JVM-MCL</h2>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                <img src="jvm_202605231330_51607.png" alt="JVM-MCL" title="JVM-MCL" style="height: 60px; width: 60px;">
+                <h2 style="margin: 0;">关于 JVM-MCL</h2>
+            </div>
             <p>JVM-MCL 是一个为 Minecraft Java 版本开发的现代化启动器。它结合了强大的功能和简洁的设计，旨在为玩家提供最佳的游戏启动体验。</p>
             <p style="margin-top: 1rem;">JVM-MCL 的特点包括：</p>
             <ul>
@@ -427,18 +454,24 @@
         </div>
 
         <div id="download" class="section">
-            <h2>下载 JVM-MCL</h2>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                <img src="jvm_202605231330_51607.png" alt="JVM-MCL" title="JVM-MCL" style="height: 60px; width: 60px;">
+                <h2 style="margin: 0;">下载 JVM-MCL</h2>
+            </div>
             <p>选择适合您操作系统的版本下载 JVM-MCL：</p>
             <ul>
-                <li><strong>Windows：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for Windows</a></li>
-                <li><strong>macOS：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for macOS</a></li>
-                <li><strong>Linux：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for Linux</a></li>
+                <li><strong>Windows：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: var(--md-primary); text-decoration: none;">下载 JVM-MCL for Windows</a></li>
+                <li><strong>macOS：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: var(--md-primary); text-decoration: none;">下载 JVM-MCL for macOS</a></li>
+                <li><strong>Linux：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: var(--md-primary); text-decoration: none;">下载 JVM-MCL for Linux</a></li>
             </ul>
             <p style="margin-top: 1rem;"><strong>系统要求：</strong> Java 8 或更高版本</p>
         </div>
 
         <div class="section">
-            <h2>快速开始</h2>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                <img src="jvm_202605231330_51607.png" alt="JVM-MCL" title="JVM-MCL" style="height: 60px; width: 60px;">
+                <h2 style="margin: 0;">快速开始</h2>
+            </div>
             <p>使用 JVM-MCL 只需三步：</p>
             <ul>
                 <li><strong>步骤 1：</strong>下载并安装 JVM-MCL</li>
