@@ -5,6 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JVM-MCL - Minecraft 启动器</title>
     <style>
+        :root {
+            /* MD3 色彩系统 */
+            --md-primary: #6750a4;
+            --md-on-primary: #ffffff;
+            --md-primary-container: #eaddff;
+            --md-on-primary-container: #21005e;
+            
+            --md-secondary: #625b71;
+            --md-on-secondary: #ffffff;
+            --md-secondary-container: #e8def8;
+            --md-on-secondary-container: #1d192b;
+            
+            --md-tertiary: #7d5260;
+            --md-on-tertiary: #ffffff;
+            --md-tertiary-container: #ffd8e4;
+            --md-on-tertiary-container: #31111d;
+            
+            --md-error: #b3261e;
+            --md-on-error: #ffffff;
+            --md-error-container: #f9dedc;
+            --md-on-error-container: #410e0b;
+            
+            --md-outline: #79747e;
+            --md-background: #fffbfe;
+            --md-on-background: #1c1b1f;
+            --md-surface: #fffbfe;
+            --md-on-surface: #1c1b1f;
+            --md-surface-variant: #e7e0ec;
+            --md-on-surface-variant: #49454e;
+            
+            /* 阴影 */
+            --md-shadow-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --md-shadow-2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+            --md-shadow-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+            --md-shadow-4: 0px 2px 3px 0px rgba(0, 0, 0, 0.3), 0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+            --md-shadow-5: 0px 4px 4px 0px rgba(0, 0, 0, 0.3), 0px 8px 12px 6px rgba(0, 0, 0, 0.15);
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,19 +50,20 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--md-primary-container) 0%, var(--md-secondary-container) 100%);
+            color: var(--md-on-background);
+            line-height: 1.5;
         }
         
         header {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 2rem 0;
+            background: var(--md-surface);
+            color: var(--md-on-surface);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: var(--md-shadow-1);
         }
         
         .container {
@@ -37,13 +76,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--md-primary);
+            letter-spacing: 0.5px;
         }
         
         .nav-links {
@@ -53,123 +92,177 @@
         }
         
         .nav-links a {
-            color: white;
+            color: var(--md-on-surface);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.2s;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
         
         .nav-links a:hover {
-            color: #667eea;
+            color: var(--md-primary);
         }
         
         .hero {
-            background: white;
+            background: var(--md-surface);
             padding: 4rem 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            margin: 2rem 0;
+            box-shadow: var(--md-shadow-2);
+            text-align: center;
         }
         
         .hero h1 {
-            font-size: 3rem;
-            color: #667eea;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--md-primary);
             margin-bottom: 1rem;
+            letter-spacing: -0.5px;
         }
         
         .hero p {
-            font-size: 1.2rem;
-            color: #666;
+            font-size: 1rem;
+            color: var(--md-on-surface);
             margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
         }
         
         .cta-button {
             display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 5px;
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            padding: 0.75rem 2rem;
+            border-radius: 24px;
             text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
+            font-weight: 600;
+            transition: all 0.2s;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            box-shadow: var(--md-shadow-2);
         }
         
         .cta-button:hover {
-            background: #764ba2;
+            background: #5a3f96;
+            box-shadow: var(--md-shadow-3);
+        }
+        
+        .cta-button:active {
+            box-shadow: var(--md-shadow-1);
         }
         
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
         
         .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: var(--md-surface);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: var(--md-shadow-1);
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.2s;
+            border: 1px solid var(--md-surface-variant);
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
+            box-shadow: var(--md-shadow-3);
+            transform: translateY(-4px);
         }
         
         .feature-card h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            color: var(--md-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
         
         .feature-card p {
-            color: #666;
-            line-height: 1.8;
+            color: var(--md-on-surface);
+            line-height: 1.6;
+            font-size: 0.9rem;
         }
         
         .icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
         
         .section {
-            background: white;
+            background: var(--md-surface);
             padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--md-shadow-1);
+            border: 1px solid var(--md-surface-variant);
         }
         
         .section h2 {
-            color: #667eea;
+            color: var(--md-primary);
             margin-bottom: 1.5rem;
-            font-size: 2rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .section p {
+            color: var(--md-on-surface);
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
         
         .section ul {
             margin-left: 2rem;
-            color: #666;
+            color: var(--md-on-surface);
         }
         
         .section li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        
+        .section a {
+            color: var(--md-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .section a:hover {
+            color: #5a3f96;
         }
         
         footer {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
+            background: var(--md-surface);
+            color: var(--md-on-surface);
             text-align: center;
             padding: 2rem;
-            margin-top: 3rem;
-            border-radius: 10px 10px 0 0;
+            margin-top: 2rem;
+            border-radius: 20px 20px 0 0;
+            box-shadow: var(--md-shadow-2);
+            border-top: 1px solid var(--md-surface-variant);
         }
         
         footer p {
             margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--md-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        footer a:hover {
+            color: #5a3f96;
         }
     </style>
 </head>
@@ -191,7 +284,7 @@
         <div class="hero">
             <h1>欢迎使用 JVM-MCL</h1>
             <p>JVM-MCL 是一个功能强大的 Minecraft 启动器，专为 Java 版本优化设计。让您轻松管理游戏实例，享受无缝的游戏体验。</p>
-            <button class="cta-button">立即下载 JVM-MCL</button>
+            <a href="https://github.com/Open-code-Studio/JVM-MCL" class="cta-button">立即下载 JVM-MCL</a>
         </div>
 
         <div id="features" class="features">
@@ -250,9 +343,9 @@
             <h2>下载 JVM-MCL</h2>
             <p>选择适合您操作系统的版本下载 JVM-MCL：</p>
             <ul>
-                <li><strong>Windows：</strong><a href="#" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for Windows</a></li>
-                <li><strong>macOS：</strong><a href="#" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for macOS</a></li>
-                <li><strong>Linux：</strong><a href="#" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for Linux</a></li>
+                <li><strong>Windows：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for Windows</a></li>
+                <li><strong>macOS：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for macOS</a></li>
+                <li><strong>Linux：</strong><a href="https://github.com/Open-code-Studio/JVM-MCL/releases" style="color: #667eea; text-decoration: none;">下载 JVM-MCL for Linux</a></li>
             </ul>
             <p style="margin-top: 1rem;"><strong>系统要求：</strong> Java 8 或更高版本</p>
         </div>
@@ -271,7 +364,7 @@
     <footer>
         <p>&copy; 2026 JVM-MCL - Minecraft 启动器。保留所有权利。</p>
         <p>JVM-MCL 是第三方启动器，与 Mojang Studios 无关。</p>
-        <p><a href="#" style="color: #667eea; text-decoration: none;">隐私政策</a> | <a href="#" style="color: #667eea; text-decoration: none;">服务条款</a> | <a href="#" style="color: #667eea; text-decoration: none;">联系我们</a></p>
+        <p><a href="https://github.com/Open-code-Studio/JVM-MCL" style="color: #667eea; text-decoration: none;">GitHub 仓库</a> | <a href="https://github.com/Open-code-Studio/JVM-MCL/issues" style="color: #667eea; text-decoration: none;">问题反馈</a> | <a href="https://github.com/Open-code-Studio/JVM-MCL" style="color: #667eea; text-decoration: none;">更多信息</a></p>
     </footer>
 </body>
 </html>
