@@ -7,10 +7,10 @@
     <style>
         :root {
             /* MD3 色彩系统 */
-            --md-primary: #6750a4;
+            --md-primary: #4AA26F;
             --md-on-primary: #ffffff;
-            --md-primary-container: #eaddff;
-            --md-on-primary-container: #21005e;
+            --md-primary-container: #d4f5e0;
+            --md-on-primary-container: #0d2b1a;
             
             --md-secondary: #625b71;
             --md-on-secondary: #ffffff;
@@ -262,7 +262,94 @@
         }
         
         footer a:hover {
-            color: #5a3f96;
+            color: #3a8256;
+        }
+        
+        .color-picker-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--md-primary);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--md-shadow-4);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 99;
+        }
+        
+        .color-picker-btn:hover {
+            box-shadow: var(--md-shadow-5);
+            transform: scale(1.1);
+        }
+        
+        .color-picker-container {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            background: var(--md-surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--md-shadow-4);
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 99;
+        }
+        
+        .color-picker-container.show {
+            display: flex;
+        }
+        
+        .color-picker-container h3 {
+            margin: 0;
+            color: var(--md-on-surface);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .color-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .color-input-wrapper input[type="color"] {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        .color-preset {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-btn.active {
+            border-color: var(--md-on-surface);
+            transform: scale(1.15);
         }
     </style>
 </head>
@@ -364,7 +451,148 @@
     <footer>
         <p>&copy; 2026 JVM-MCL - Minecraft 启动器。保留所有权利。</p>
         <p>JVM-MCL 是第三方启动器，与 Mojang Studios 无关。</p>
-        <p><a href="https://github.com/Open-code-Studio/JVM-MCL" style="color: #667eea; text-decoration: none;">GitHub 仓库</a> | <a href="https://github.com/Open-code-Studio/JVM-MCL/issues" style="color: #667eea; text-decoration: none;">问题反馈</a> | <a href="https://github.com/Open-code-Studio/JVM-MCL" style="color: #667eea; text-decoration: none;">更多信息</a></p>
+        <p><a href="https://github.com/Open-code-Studio/JVM-MCL" style="color: var(--md-primary); text-decoration: none;">GitHub 仓库</a> | <a href="https://github.com/Open-code-Studio/JVM-MCL/issues" style="color: var(--md-primary); text-decoration: none;">问题反馈</a> | <a href="https://github.com/Open-code-Studio/JVM-MCL" style="color: var(--md-primary); text-decoration: none;">更多信息</a></p>
     </footer>
+
+    <!-- 颜色选择器 -->
+    <div class="color-picker-container" id="colorPickerContainer">
+        <h3>自定义站点颜色</h3>
+        <div class="color-input-wrapper">
+            <input type="color" id="colorInput" value="#4AA26F">
+            <button class="cta-button" onclick="resetColor()" style="padding: 0.5rem 1rem; font-size: 0.8rem;">重置</button>
+        </div>
+        <div class="color-preset">
+            <button class="color-btn active" onclick="setColor('#4AA26F')" style="background-color: #4AA26F;" title="默认绿色"></button>
+            <button class="color-btn" onclick="setColor('#6750a4')" style="background-color: #6750a4;" title="紫色"></button>
+            <button class="color-btn" onclick="setColor('#1f71b8')" style="background-color: #1f71b8;" title="蓝色"></button>
+            <button class="color-btn" onclick="setColor('#c4161c')" style="background-color: #c4161c;" title="红色"></button>
+            <button class="color-btn" onclick="setColor('#f57f17')" style="background-color: #f57f17;" title="橙色"></button>
+            <button class="color-btn" onclick="setColor('#d81b60')" style="background-color: #d81b60;" title="粉色"></button>
+        </div>
+    </div>
+
+    <button class="color-picker-btn" onclick="toggleColorPicker()">🎨</button>
+
+    <script>
+        const DEFAULT_COLOR = '#4AA26F';
+        const colorInput = document.getElementById('colorInput');
+        const colorPickerContainer = document.getElementById('colorPickerContainer');
+
+        // 初始化：从 localStorage 读取保存的颜色，否则使用默认颜色
+        function initializeColor() {
+            const savedColor = localStorage.getItem('siteColor') || DEFAULT_COLOR;
+            setColor(savedColor);
+        }
+
+        // 设置颜色并保存
+        function setColor(color) {
+            // 验证颜色格式
+            if (!isValidColor(color)) {
+                color = DEFAULT_COLOR;
+            }
+
+            // 更新 CSS 变量
+            const rgbColor = hexToRgb(color);
+            const lightenedColor = lightenColor(color, 0.8);
+            const darkenedColor = darkenColor(color, 0.15);
+
+            document.documentElement.style.setProperty('--md-primary', color);
+            document.documentElement.style.setProperty('--md-primary-container', lightenedColor);
+            document.documentElement.style.setProperty('--md-on-primary-container', darkenColor(color, 0.5));
+
+            // 更新输入框
+            colorInput.value = color;
+
+            // 更新预设按钮的活跃状态
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                if (btn.style.backgroundColor.toLowerCase() === color.toLowerCase()) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // 保存到 localStorage
+            localStorage.setItem('siteColor', color);
+        }
+
+        // 重置为默认颜色
+        function resetColor() {
+            setColor(DEFAULT_COLOR);
+        }
+
+        // 切换颜色选择器显示
+        function toggleColorPicker() {
+            colorPickerContainer.classList.toggle('show');
+        }
+
+        // 隐藏颜色选择器
+        function hideColorPicker() {
+            colorPickerContainer.classList.remove('show');
+        }
+
+        // 监听颜色输入变化
+        colorInput.addEventListener('input', (e) => {
+            setColor(e.target.value);
+        });
+
+        // 验证颜色格式
+        function isValidColor(color) {
+            const hexRegex = /^#[0-9A-F]{6}$/i;
+            return hexRegex.test(color);
+        }
+
+        // 将 hex 转换为 RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        // 将 RGB 转换为 hex
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('').toUpperCase();
+        }
+
+        // 亮化颜色
+        function lightenColor(hex, percent) {
+            const rgb = hexToRgb(hex);
+            if (!rgb) return hex;
+
+            const r = Math.round(rgb.r + (255 - rgb.r) * percent);
+            const g = Math.round(rgb.g + (255 - rgb.g) * percent);
+            const b = Math.round(rgb.b + (255 - rgb.b) * percent);
+
+            return rgbToHex(r, g, b);
+        }
+
+        // 暗化颜色
+        function darkenColor(hex, percent) {
+            const rgb = hexToRgb(hex);
+            if (!rgb) return hex;
+
+            const r = Math.round(rgb.r * (1 - percent));
+            const g = Math.round(rgb.g * (1 - percent));
+            const b = Math.round(rgb.b * (1 - percent));
+
+            return rgbToHex(r, g, b);
+        }
+
+        // 点击页面其他地方时隐藏颜色选择器
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.color-picker-container') && !e.target.closest('.color-picker-btn')) {
+                hideColorPicker();
+            }
+        });
+
+        // 页面加载时初始化颜色
+        window.addEventListener('DOMContentLoaded', initializeColor);
+    </script>
 </body>
 </html>
